@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:paddingTop="50dp"
+    >
+
+    <ImageView
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#55000000"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/imageView"
+        />
+    <LinearLayout
+        android:paddingTop="5dp"
+        android:paddingLeft="50dp"
+        android:paddingRight="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="选择图片"
+            android:id="@+id/selectImage"
+            />
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="限.jpg和.png"
+            android:gravity="center_horizontal|center_vertical"/>
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="上传图片"
+            android:id="@+id/uploadImage"
+            />
+    </LinearLayout>
+</LinearLayout>

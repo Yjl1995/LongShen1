@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+    <item android:state_pressed="true" android:drawable="@mipmap/pm_submit_order_less_btn_down"/>
+    <item android:state_pressed="false" android:drawable="@mipmap/pm_submit_order_less_btn_normal"/>
+</selector>

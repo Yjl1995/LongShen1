@@ -2,9 +2,32 @@ package com.example.apple.buffetapplication;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.os.Vibrator;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.facebook.drawee.backends.pipeline.PipelineDraweeController;
+import com.facebook.drawee.view.SimpleDraweeView;
+import com.facebook.imagepipeline.common.ResizeOptions;
+import com.facebook.imagepipeline.request.ImageRequest;
+import com.facebook.imagepipeline.request.ImageRequestBuilder;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.ProtocolException;
+import java.net.URL;
 
 import cn.bingoogolapple.qrcode.core.QRCodeView;
 import cn.bingoogolapple.qrcode.zxing.ZXingView;
@@ -12,12 +35,71 @@ import cn.bingoogolapple.qrcode.zxing.ZXingView;
 public class ScanActivity extends Activity implements QRCodeView.Delegate {
 
     private QRCodeView mQR;
+    static String url = "http://115.159.212.180/API/getShopInfo/getShopInfo.php?shopId=";
+    static String Alldata = "";
+    static String MESSAGE = "您的网络不稳定，请检查网络连接！";
+    static String CODE = "";
+    static String Shop_id = "";
+    private Handler mHandler = new Handler(){
 
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case 1:
+                    Alldata = msg.obj.toString();
+                    ExcJson();
+                    if(CODE.equals("200")){
+                        Intent intent =new Intent(ScanActivity.this,ShopActivity.class);
+                        intent.putExtra("shopid",Shop_id);
+                        startActivity(intent);
+                    }
+                    else{
+                        Toast.makeText(getBaseContext(), MESSAGE, Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
+    class PrThread implements Runnable {
+        public PrThread() {
+        }
+        public void run() {
+            try {
+                URL url1 = new URL(url+Shop_id);
+
+                HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setReadTimeout(5000);
+                connection.connect();
+                InputStream inStream = connection.getInputStream();
+                String flag = new String(inputtostring(inStream));
+                System.out.println("flag = " + flag);
+                Message message = new Message();
+                message.what = 1;
+                message.obj = flag;
+                mHandler.sendMessage(message);
+                inStream.close();
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scan_zxing);
-
+        MESSAGE = "您的网络不稳定，请检查网络连接！";
         mQR = (ZXingView) findViewById(R.id.zx_view);
 
         //设置结果处理
@@ -51,10 +133,11 @@ public class ScanActivity extends Activity implements QRCodeView.Delegate {
     @Override
     public void onScanQRCodeSuccess(String result) {
 
+        Shop_id = result;
+        PrThread shim = new PrThread();
+        Thread tt = new Thread(shim);
+        tt.start();
         //Toast.makeText(ScanActivity.this, result, Toast.LENGTH_SHORT).show();
-        Intent intent =new Intent(this,ShopActivity.class);
-        intent.putExtra("result",result);
-        startActivity(intent);
         //震动
         vibrate();
         //停止预览
@@ -91,6 +174,29 @@ public class ScanActivity extends Activity implements QRCodeView.Delegate {
     protected void onStop() {
         mQR.stopCamera();
         super.onStop();
+    }
+
+    private void ExcJson(){
+        try {
+            JSONObject jsonObject = new JSONObject(Alldata);
+            CODE = jsonObject.getString("code");
+            MESSAGE = jsonObject.getString("message");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
+    public static String inputtostring(InputStream in_st){
+        BufferedReader in = new BufferedReader(new InputStreamReader(in_st));
+        StringBuffer buffer = new StringBuffer();
+        String line = "";
+        try {
+            while ((line = in.readLine()) != null){
+                buffer.append(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return buffer.toString();
     }
 }
 

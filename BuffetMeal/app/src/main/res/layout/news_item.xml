@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+        <com.facebook.drawee.view.SimpleDraweeView
+            android:layout_width="100dp"
+            android:id="@+id/img1"
+            android:layout_height="100dp"
+            />
+
+    <LinearLayout android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:paddingLeft="5dp"
+        android:paddingRight="5dp"
+        android:layout_height="100dp">
+
+        <TextView android:id="@+id/te1"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="6"
+            android:textColor="#000000"
+            android:textSize="20dp" />
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1.2"
+            android:text="点击查看详情>>"
+            android:gravity="end"
+            android:textColor="#ff8508"/>
+
+    </LinearLayout>
+
+</LinearLayout>

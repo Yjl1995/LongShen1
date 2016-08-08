@@ -31,6 +31,9 @@ public class LoginActivity extends AppCompatActivity {
     static int ASK = -1;
     static String MESSAGE = "您网络不稳定，请检查网络连接！";
     static String KEY = "key";
+    static String NICK_NAME = "nick_name";
+    static String EMAIL = "email";
+    static String IMAGE_URL = "image_url";
 
     class PrThread implements Runnable{
         private String _name;
@@ -50,7 +53,7 @@ public class LoginActivity extends AppCompatActivity {
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
-                connection.setReadTimeout(2000);
+                connection.setReadTimeout(1000);
                 connection.connect();
                 InputStream inStream = connection.getInputStream();
                 String flag = new String(inputtostring(inStream));
@@ -60,14 +63,21 @@ public class LoginActivity extends AppCompatActivity {
                 JSONObject jsonObject = new JSONObject(flag);
                 String code = jsonObject.getString("code");
                 final String message = jsonObject.getString("message");
-                JSONObject jsonObject1 = new JSONObject(jsonObject.getString("data"));
-                final String key = jsonObject1.getString("key");
-                System.out.println("key = "+key);
                 System.out.println("code = "+code);
                 System.out.println("message = "+message);
 
                 if (code.equals("200")) {
-                    {
+                    JSONObject jsonObject1 = new JSONObject(jsonObject.getString("data"));
+                    final String key = jsonObject1.getString("key");
+                    final String nick_name = jsonObject1.getString("nick_name");
+                    final String email = jsonObject1.getString("email");
+                    final String image_url = jsonObject1.getString("image_url");
+                    System.out.println("key = "+key);
+                    System.out.println("nick_name = "+nick_name);
+                    System.out.println("email = "+email);
+                    System.out.println("Image_url = "+image_url);
+
+                        {
                         runOnUiThread(new Runnable() {
 
                             @Override
@@ -76,6 +86,9 @@ public class LoginActivity extends AppCompatActivity {
                                 ASK = 1;
                                 MESSAGE = message;
                                 KEY = key;
+                                NICK_NAME = nick_name;
+                                EMAIL = email;
+                                IMAGE_URL = image_url;
                             }
 
                         });
@@ -133,10 +146,16 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        ASK = -1;
+        MESSAGE = "您网络不稳定，请检查网络连接！";
         if(Util.getBooleanValue(LoginActivity.this,"LoginState")==true){
             Intent intent = new Intent();
-            intent.setClass(LoginActivity.this, MainActivity.class);
-            intent.putExtra("KEY",Util.getValue(this,"KEY"));
+            intent.setClass(LoginActivity.this, NewMainActivity.class);
+            intent.putExtra("KEY", Util.getValue(this, "KEY"));
+            intent.putExtra("NICK_NAME",Util.getValue(this,"NICK_NAME"));
+            intent.putExtra("EMAIL",Util.getValue(this,"EMAIL"));
+            intent.putExtra("IMAGE_URL", Util.getValue(this, "IMAGE_URL"));
+            System.out.println("图片下载地址："+Util.getValue(this,"IMAGE_URL"));
             startActivity(intent);
             finish();
         }
@@ -179,7 +198,7 @@ public class LoginActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(LoginActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Authenticating...");
+        progressDialog.setMessage("登录中...");
         progressDialog.show();
 
         String username = _usernameText.getText().toString();
@@ -208,7 +227,7 @@ public class LoginActivity extends AppCompatActivity {
                         // onLoginFailed();
 
                     }
-                }, 2100);
+                }, 1100);
     }
 
 
@@ -240,8 +259,11 @@ public class LoginActivity extends AppCompatActivity {
         Util.putValue(LoginActivity.this, "NAME", username);
         Util.putValue(LoginActivity.this, "PWD",
                 password);
-        Intent intent = new Intent(this,MainActivity.class);
-        intent.putExtra("KEY",KEY);
+        Intent intent = new Intent(this,NewMainActivity.class);
+        intent.putExtra("KEY", KEY);
+        intent.putExtra("NICK_NAME",NICK_NAME);
+        intent.putExtra("EMAIL",EMAIL);
+        intent.putExtra("IMAGE_URL",IMAGE_URL);
         startActivity(intent);
         finish();
     }

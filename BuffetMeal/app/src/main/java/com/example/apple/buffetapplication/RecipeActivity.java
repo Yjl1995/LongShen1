@@ -2,6 +2,11 @@ package com.example.apple.buffetapplication;
 
 import android.annotation.SuppressLint;
 import android.app.TabActivity;
+import android.content.ContentValues;
+import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+import android.graphics.Bitmap;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v4.view.PagerAdapter;
@@ -13,9 +18,12 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.TabHost;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -40,11 +48,13 @@ public class RecipeActivity extends AppCompatActivity{
     private ListView listview2;
     private ListView listview3;
     private ListView listview4;
-
-    static String url = "http://115.159.212.180/API/getFoodMenu/getFoodMenu.php?shopId=1";
+    SQLiteDatabase db;
+    static String Shop_id = "";
+    static String url = "http://115.159.212.180/API/getFoodMenu/getFoodMenu.php?shopId=";
     static String Alldata = "";
     static String CODE = "";
     static String MESSAGE = "";
+    static String Desk_id = "";
     static Meal[] type_1 = new Meal[200];
     static int type_1num = 0;
     static Meal[] type_2 = new Meal[200];
@@ -63,19 +73,12 @@ public class RecipeActivity extends AppCompatActivity{
                 case UPDATE:
                     Alldata = msg.obj.toString();
                     ExcJson();
-                   /* for(int j = 0;j < type_1num;j++){
-                        type_1[j].outdata();
+                    for(int i = 0;i < type_3num;i++){
+                        type_3[i].outdata();
                     }
-                    for(int j = 0;j < type_2num;j++){
-                        type_2[j].outdata();
+                    for(int i = 0;i < type_4num;i++){
+                        type_4[i].outdata();
                     }
-                    for(int j = 0;j < type_3num;j++){
-                        type_3[j].outdata();
-                    }
-                    for(int j = 0;j < type_4num;j++){
-                        type_4[j].outdata();
-                    }*/
-
                     View view1 = LayoutInflater.from(RecipeActivity.this).inflate(R.layout.tab1, null);
                     listview1 = (ListView)view1.findViewById(R.id.list_item);
                     View view2 = LayoutInflater.from(RecipeActivity.this).inflate(R.layout.tab2, null);
@@ -131,26 +134,25 @@ public class RecipeActivity extends AppCompatActivity{
                             return titleContainer.get(position);
                         }
                     });
-                    SimpleAdapter adapter = new SimpleAdapter(RecipeActivity.this,getData1(),R.layout.item,
-                            new String[]{"name", "introduce","price","img"},
-                            new int[]{R.id.name1, R.id.introduce1,R.id.price1, R.id.img1});
-                    listview1.setAdapter(adapter);
-                    listview1.setOnItemClickListener(listener);
-                    SimpleAdapter adapter2 = new SimpleAdapter(RecipeActivity.this,getData2(),R.layout.item2,
-                            new String[]{"name", "introduce","price","img"},
-                            new int[]{R.id.name2, R.id.introduce2,R.id.price2, R.id.img2});
-                    listview2.setAdapter(adapter2);
-                    listview2.setOnItemClickListener(listener);
-                    SimpleAdapter adapter3 = new SimpleAdapter(RecipeActivity.this,getData3(),R.layout.item3,
-                            new String[]{"name", "introduce","price","img"},
-                            new int[]{R.id.name3, R.id.introduce3,R.id.price3, R.id.img3});
-                    listview3.setAdapter(adapter3);
-                    listview3.setOnItemClickListener(listener);
-                    SimpleAdapter adapter4 = new SimpleAdapter(RecipeActivity.this,getData4(),R.layout.item4,
-                            new String[]{"name", "introduce","price","img"},
-                            new int[]{R.id.name4, R.id.introduce4,R.id.price4, R.id.img4});
-                    listview4.setAdapter(adapter4);
-                    listview4.setOnItemClickListener(listener);
+                    // listview1=(ListView) findViewById(R.id.list_item);
+                    MyAdapter1 adapter1=new MyAdapter1();
+                    listview2.setAdapter(adapter1);
+                    listview2.setOnItemClickListener(new ItemClickEvent1());
+                    //listview1.setOnItemClickListener(listener);
+                    // listview2=(ListView) findViewById(R.id.list_item2);
+                    MyAdapter2 adapter2=new MyAdapter2();
+                    listview1.setAdapter(adapter2);
+                    listview1.setOnItemClickListener(new ItemClickEvent2());
+                    //listview3=(ListView) findViewById(R.id.list_item3);
+                    MyAdapter3 adapter3=new MyAdapter3();
+                    listview4.setAdapter(adapter3);
+                    listview4.setOnItemClickListener(new ItemClickEvent3());
+                    // listview3.setOnItemClickListener(listener);
+                    //listview4=(ListView) findViewById(R.id.list_item4);
+                    MyAdapter4 adapter4=new MyAdapter4();
+                    listview3.setAdapter(adapter4);
+                    listview3.setOnItemClickListener(new ItemClickEvent4());
+                    // listview4.setOnItemClickListener(listener);
                     //System.out.println("ALLdata = "+Alldata);
                     break;
                 default:
@@ -165,7 +167,7 @@ public class RecipeActivity extends AppCompatActivity{
         }
         public void run() {
             try {
-                URL url1 = new URL(url);
+                URL url1 = new URL(url+Shop_id);
                 HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
@@ -204,6 +206,10 @@ public class RecipeActivity extends AppCompatActivity{
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        Intent intent = getIntent();
+        Shop_id = intent.getStringExtra("shopid");
+        Desk_id = intent.getStringExtra("deskid");
+        db = SQLiteDatabase.openOrCreateDatabase("/data/data/com.example.apple.buffetapplication/yjl.db", null);
         type_1num = 0;
         type_2num = 0;
         type_3num = 0;
@@ -281,81 +287,7 @@ public class RecipeActivity extends AppCompatActivity{
 
 
 
-      /*  SimpleAdapter adapter = new SimpleAdapter(this,getData1(),R.layout.item,
-                new String[]{"title","info","img"},
-                new int[]{R.id.title1,R.id.info1,R.id.img1});
-        listview1.setAdapter(adapter);
-        SimpleAdapter adapter2 = new SimpleAdapter(this,getData2(),R.layout.item2,
-                new String[]{"title","info","img"},
-                new int[]{R.id.title2,R.id.info2,R.id.img2});
-        listview2.setAdapter(adapter2);
-        SimpleAdapter adapter3 = new SimpleAdapter(this,getData3(),R.layout.item3,
-                new String[]{"title","info","img"},
-                new int[]{R.id.title3,R.id.info3,R.id.img3});
-        listview3.setAdapter(adapter3);
-        SimpleAdapter adapter4 = new SimpleAdapter(this,getData4(),R.layout.item4,
-                new String[]{"title","info","img"},
-                new int[]{R.id.title4,R.id.info4,R.id.img4});
-        listview4.setAdapter(adapter4);   */
 
-
-    }
-    private List<Map<String, Object>> getData1() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-        for(int i = 0;i < type_1num;i++){
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", type_1[i].food_name);
-            map.put("introduce", type_1[i].introduce);
-            map.put("price", type_1[i].price);
-            map.put("img", R.drawable.i1);
-            list.add(map);
-        }
-
-        return list;
-    }
-    private List<Map<String, Object>> getData2() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-        for(int i = 0;i < type_2num;i++){
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", type_2[i].food_name);
-            map.put("introduce", type_2[i].introduce);
-            map.put("price", type_2[i].price);
-            map.put("img", R.drawable.i2);
-            list.add(map);
-        }
-
-        return list;
-    }
-    private List<Map<String, Object>> getData3() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-        for(int i = 0;i < type_3num;i++){
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", type_3[i].food_name);
-            map.put("introduce", type_3[i].introduce);
-            map.put("price", type_3[i].price);
-            map.put("img", R.drawable.i3);
-            list.add(map);
-        }
-
-
-        return list;
-    }
-    private List<Map<String, Object>> getData4() {
-        List<Map<String, Object>> list = new ArrayList<Map<String, Object>>();
-
-        for(int i = 0;i < type_4num;i++){
-            Map<String, Object> map = new HashMap<String, Object>();
-            map.put("name", type_4[i].food_name);
-            map.put("introduce", type_4[i].introduce);
-            map.put("price", type_4[i].price);
-            map.put("img", R.drawable.i3);
-            list.add(map);
-        }
-
-        return list;
     }
     private void ExcJson(){
         try {
@@ -427,6 +359,242 @@ public class RecipeActivity extends AppCompatActivity{
         }
 
     }
+    private class MyAdapter1 extends BaseAdapter {
+
+        private AsyncBitmapLoader asyncBitmapLoader;
+        public MyAdapter1(){
+            asyncBitmapLoader=new AsyncBitmapLoader();
+        }
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return type_1num;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            if(convertView==null){
+                convertView= LayoutInflater.from(getApplicationContext()).inflate(R.layout.item, null);
+            }
+            ImageView image=(ImageView) convertView.findViewById(R.id.img1);
+            String imageURL=type_1[position].image;
+            System.out.println("position1 = "+position);
+            Bitmap bitmap=asyncBitmapLoader.loadBitmap(image, imageURL, new AsyncBitmapLoader.ImageCallBack() {
+
+                @Override
+                public void imageLoad(ImageView imageView, Bitmap bitmap) {
+                    // TODO Auto-generated method stub
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
+            if(bitmap == null)
+            {
+                image.setImageResource(R.drawable.ic_search);
+            }
+            else
+            {
+                image.setImageBitmap(bitmap);
+            }
+            TextView textView1 = (TextView) convertView.findViewById(R.id.name1);
+            textView1.setText(type_1[position].food_name);
+            TextView textView2 = (TextView) convertView.findViewById(R.id.introduce1);
+            textView2.setText(type_1[position].introduce);
+            TextView textView3 = (TextView) convertView.findViewById(R.id.price1);
+            textView3.setText(Double.toString(type_1[position].price)+"￥");
+            return convertView;
+        }
+
+    }
+    private class MyAdapter2 extends BaseAdapter {
+
+        private AsyncBitmapLoader asyncBitmapLoader;
+        public MyAdapter2(){
+            asyncBitmapLoader=new AsyncBitmapLoader();
+        }
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return type_2num;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            if(convertView==null){
+                convertView= LayoutInflater.from(getApplicationContext()).inflate(R.layout.item2, null);
+            }
+            ImageView image=(ImageView) convertView.findViewById(R.id.img2);
+            String imageURL=type_2[position].image;
+            System.out.println("position2 = " + position);
+            Bitmap bitmap=asyncBitmapLoader.loadBitmap(image, imageURL, new AsyncBitmapLoader.ImageCallBack() {
+
+                @Override
+                public void imageLoad(ImageView imageView, Bitmap bitmap) {
+                    // TODO Auto-generated method stub
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
+            if(bitmap == null)
+            {
+                image.setImageResource(R.drawable.ic_search);
+            }
+            else
+            {
+                image.setImageBitmap(bitmap);
+            }
+            TextView textView1 = (TextView) convertView.findViewById(R.id.name2);
+            textView1.setText(type_2[position].food_name);
+            TextView textView2 = (TextView) convertView.findViewById(R.id.introduce2);
+            textView2.setText(type_2[position].introduce);
+            TextView textView3 = (TextView) convertView.findViewById(R.id.price2);
+            textView3.setText(Double.toString(type_2[position].price)+"￥");
+            return convertView;
+        }
+
+    }
+    private class MyAdapter3 extends BaseAdapter {
+
+        private AsyncBitmapLoader asyncBitmapLoader;
+        public MyAdapter3(){
+            asyncBitmapLoader=new AsyncBitmapLoader();
+        }
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return type_3num;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            if(convertView==null){
+                convertView= LayoutInflater.from(getApplicationContext()).inflate(R.layout.item3, null);
+            }
+            ImageView image=(ImageView) convertView.findViewById(R.id.img3);
+            String imageURL=type_3[position].image;
+            System.out.println("position3 = " + position);
+            Bitmap bitmap=asyncBitmapLoader.loadBitmap(image, imageURL, new AsyncBitmapLoader.ImageCallBack() {
+
+                @Override
+                public void imageLoad(ImageView imageView, Bitmap bitmap) {
+                    // TODO Auto-generated method stub
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
+            if(bitmap == null)
+            {
+                image.setImageResource(R.drawable.ic_search);
+            }
+            else
+            {
+                image.setImageBitmap(bitmap);
+            }
+            TextView textView1 = (TextView) convertView.findViewById(R.id.name3);
+            textView1.setText(type_3[position].food_name);
+            TextView textView2 = (TextView) convertView.findViewById(R.id.introduce3);
+            textView2.setText(type_3[position].introduce);
+            TextView textView3 = (TextView) convertView.findViewById(R.id.price3);
+            textView3.setText(Double.toString(type_3[position].price)+"￥");
+            return convertView;
+        }
+
+    }
+    private class MyAdapter4 extends BaseAdapter {
+
+        private AsyncBitmapLoader asyncBitmapLoader;
+        public MyAdapter4(){
+            asyncBitmapLoader=new AsyncBitmapLoader();
+        }
+        @Override
+        public int getCount() {
+            // TODO Auto-generated method stub
+            return type_4num;
+        }
+
+        @Override
+        public Object getItem(int position) {
+            // TODO Auto-generated method stub
+            return null;
+        }
+
+        @Override
+        public long getItemId(int position) {
+            // TODO Auto-generated method stub
+            return 0;
+        }
+
+        @Override
+        public View getView(int position, View convertView, ViewGroup parent) {
+            // TODO Auto-generated method stub
+            if(convertView==null){
+                convertView= LayoutInflater.from(getApplicationContext()).inflate(R.layout.item4, null);
+            }
+            ImageView image=(ImageView) convertView.findViewById(R.id.img4);
+            String imageURL=type_4[position].image;
+            System.out.println("position4 = " + position);
+            Bitmap bitmap=asyncBitmapLoader.loadBitmap(image, imageURL, new AsyncBitmapLoader.ImageCallBack() {
+
+                @Override
+                public void imageLoad(ImageView imageView, Bitmap bitmap) {
+                    // TODO Auto-generated method stub
+                    imageView.setImageBitmap(bitmap);
+                }
+            });
+            if(bitmap == null)
+            {
+                image.setImageResource(R.drawable.ic_search);
+            }
+            else
+            {
+                image.setImageBitmap(bitmap);
+            }
+            TextView textView1 = (TextView) convertView.findViewById(R.id.name4);
+            textView1.setText(type_4[position].food_name);
+            TextView textView2 = (TextView) convertView.findViewById(R.id.introduce4);
+            textView2.setText(type_4[position].introduce);
+            TextView textView3 = (TextView) convertView.findViewById(R.id.price4);
+            textView3.setText(Double.toString(type_4[position].price)+"￥");
+            return convertView;
+        }
+
+    }
     public static String inputtostring(InputStream in_st){
         BufferedReader in = new BufferedReader(new InputStreamReader(in_st));
         StringBuffer buffer = new StringBuffer();
@@ -440,7 +608,7 @@ public class RecipeActivity extends AppCompatActivity{
         }
         return buffer.toString();
     }
-    private AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener(){
+   /* private AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener(){
         @Override
         public void onItemClick(AdapterView<?> parent, View view, int position,//parent就是ListView，view表示Item视图，position表示数据索引
                                 long id) {
@@ -448,6 +616,126 @@ public class RecipeActivity extends AppCompatActivity{
             HashMap<String,Object> person = (HashMap<String,Object>)lv.getItemAtPosition(position);//SimpleAdapter返回Map
             Toast.makeText(getApplicationContext(), person.toString(), Toast.LENGTH_SHORT).show();
         }
-    };
+    };*/
+   private final class ItemClickEvent1 implements AdapterView.OnItemClickListener {
+       @Override
+       //这里需要注意的是第三个参数arg2，这是代表单击第几个选项
+       public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                               long arg3) {
+           //通过单击事件，获得单击选项的内容
+
+           Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_1[arg2].food_id)}, null, null, null);
+           boolean bool = cursor.moveToFirst();
+           System.out.println("bool = " + bool);
+           if (cursor.getCount() == 0) {
+
+               ContentValues cValue = new ContentValues();
+               cValue.put("foodid", Integer.toString(type_1[arg2].food_id));
+               cValue.put("name", type_1[arg2].food_name);
+               cValue.put("introduce", type_1[arg2].introduce);
+               cValue.put("price", type_1[arg2].price);
+               cValue.put("number", 1);
+               db.insert("meal", null, cValue);
+           } else {
+               ContentValues contentValues = new ContentValues();
+               contentValues.put("number", cursor.getInt(0) + 1);
+               int flat1 = db.update("meal", contentValues, "name = ?", new String[]{type_1[arg2].food_name});
+               System.out.println("flat1 = " + flat1);
+           }
+           cursor.close();
+       }
+   }
+    private final class ItemClickEvent2 implements AdapterView.OnItemClickListener {
+        @Override
+        //这里需要注意的是第三个参数arg2，这是代表单击第几个选项
+        public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                long arg3) {
+            //通过单击事件，获得单击选项的内容
+            System.out.println("arg = "+arg2);
+            Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_2[arg2].food_id)}, null, null, null);
+            boolean bool = cursor.moveToFirst();
+            System.out.println("bool = " + bool);
+            if (cursor.getCount() == 0) {
+
+                ContentValues cValue = new ContentValues();
+                cValue.put("foodid", Integer.toString(type_2[arg2].food_id));
+                cValue.put("name", type_2[arg2].food_name);
+                cValue.put("introduce", type_2[arg2].introduce);
+                cValue.put("price", type_2[arg2].price);
+                cValue.put("number", 1);
+                db.insert("meal", null, cValue);
+            } else {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("number", cursor.getInt(0) + 1);
+                int flat1 = db.update("meal", contentValues, "name = ?", new String[]{type_2[arg2].food_name});
+                System.out.println("flat1 = " + flat1);
+            }
+            cursor.close();
+        }
+    }
+    private final class ItemClickEvent3 implements AdapterView.OnItemClickListener {
+        @Override
+        //这里需要注意的是第三个参数arg2，这是代表单击第几个选项
+        public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                long arg3) {
+            //通过单击事件，获得单击选项的内容
+
+            Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_3[arg2].food_id)}, null, null, null);
+            boolean bool = cursor.moveToFirst();
+            System.out.println("bool = " + bool);
+            if (cursor.getCount() == 0) {
+
+                ContentValues cValue = new ContentValues();
+                cValue.put("foodid", Integer.toString(type_3[arg2].food_id));
+                cValue.put("name", type_3[arg2].food_name);
+                cValue.put("introduce", type_3[arg2].introduce);
+                cValue.put("price", type_3[arg2].price);
+                cValue.put("number", 1);
+                db.insert("meal", null, cValue);
+            } else {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("number", cursor.getInt(0) + 1);
+                int flat1 = db.update("meal", contentValues, "name = ?", new String[]{type_3[arg2].food_name});
+                System.out.println("flat1 = " + flat1);
+            }
+            cursor.close();
+        }
+    }
+    private final class ItemClickEvent4 implements AdapterView.OnItemClickListener {
+        @Override
+        //这里需要注意的是第三个参数arg2，这是代表单击第几个选项
+        public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                long arg3) {
+            //通过单击事件，获得单击选项的内容
+
+            Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_4[arg2].food_id)}, null, null, null);
+            boolean bool = cursor.moveToFirst();
+            System.out.println("bool = " + bool);
+            if (cursor.getCount() == 0) {
+
+                ContentValues cValue = new ContentValues();
+                cValue.put("foodid", Integer.toString(type_4[arg2].food_id));
+                cValue.put("name", type_4[arg2].food_name);
+                cValue.put("introduce", type_4[arg2].introduce);
+                cValue.put("price", type_4[arg2].price);
+                cValue.put("number", 1);
+                db.insert("meal", null, cValue);
+            } else {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("number", cursor.getInt(0) + 1);
+                int flat1 = db.update("meal", contentValues, "name = ?", new String[]{type_4[arg2].food_name});
+                System.out.println("flat1 = " + flat1);
+            }
+            cursor.close();
+        }
+    }
+
+
+    public void GoShoppingcar(View view){
+        Intent intent = new Intent(this,ShoopingCartActivity.class);
+        intent.putExtra("shopid",Shop_id);
+        intent.putExtra("deskid",Desk_id);
+        startActivity(intent);
+    }
 
 }

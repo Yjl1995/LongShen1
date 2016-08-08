@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_modify"
+            android:icon="@drawable/ic_menu_changeinfo"
+            android:title="修改头像" />
+        <item
+            android:id="@+id/nav_history"
+            android:icon="@drawable/ic_menu_myfootprint"
+            android:title="我的足迹" />
+        <item
+            android:id="@+id/nav_collection"
+            android:icon="@drawable/ic_menu_store"
+            android:title="我的收藏" />
+        <item
+            android:id="@+id/nav_share"
+            android:icon="@drawable/ic_menu_share"
+            android:title="分享" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_menu_logout"
+            android:title="注销" />
+    </group>
+
+    <item android:title="帮助">
+        <menu>
+            <!--<item-->
+                <!--android:id="@+id/nav_updata"-->
+                <!--android:icon="@drawable/ic_menu_update"-->
+                <!--android:title="检查更新" />-->
+            <item
+                android:id="@+id/nav_setting"
+                android:icon="@drawable/ic_menu_systemsetting"
+                android:title="系统设置" />
+            <item
+                android:id="@+id/nav_ours"
+                android:icon="@drawable/ic_menu_aboutus"
+                android:title="关于我们" />
+        </menu>
+    </item>
+
+</menu>

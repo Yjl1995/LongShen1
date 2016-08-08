@@ -4,6 +4,8 @@ import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -22,6 +24,8 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
@@ -47,15 +51,16 @@ public class SignupActivity extends AppCompatActivity {
         public void run(){
             try{
                 System.out.println("run start");
+                String nickname = URLEncoder.encode(_nickname, "UTF-8");
                 URL url = new URL(baseUrl+"username="+_username+"&password="+_password
-                        +"&emailpre="+_emailpre+"&emailpos="+_emailpos+"&nickname="+_nickname+
+                        +"&emailpre="+_emailpre+"&emailpos="+_emailpos+"&nickname="+nickname+
                         "&key=25678C5B1288AA70");
                 System.out.println("url" + url);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
-                connection.setReadTimeout(2000);
+                connection.setReadTimeout(1000);
                 connection.connect();
                 System.out.println("开始连接");
                 InputStream inStream = connection.getInputStream();
@@ -138,8 +143,11 @@ public class SignupActivity extends AppCompatActivity {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
+        ASK = -1;
+        MESSAGE = "您网络不稳定，请检查网络连接！";
         ButterKnife.bind(this);
 
+        _usernameText.addTextChangedListener(new TextChange());
         _signupButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -156,6 +164,28 @@ public class SignupActivity extends AppCompatActivity {
         });
     }
 
+    //TODO:  20:25添加监听用户名是否为汉字功能
+    class TextChange implements TextWatcher{
+        @Override
+        public void onTextChanged(CharSequence cs,int start,int before,int count){
+            String username=_usernameText.getText().toString();
+            if(username.getBytes().length==username.length()){
+            }
+            else{
+                _usernameText.setError("用户名中只能包含英文及数字");
+            }
+        }
+        @Override
+        public void afterTextChanged(Editable arg0){
+
+        }
+        @Override
+        public  void beforeTextChanged(CharSequence arg0,int arg1,int arg2,int arg3){
+
+        }
+    }
+
+
     public void signup() {
         Log.d(TAG, "Signup");
 
@@ -169,7 +199,7 @@ public class SignupActivity extends AppCompatActivity {
         final ProgressDialog progressDialog = new ProgressDialog(SignupActivity.this,
                 R.style.AppTheme_Dark_Dialog);
         progressDialog.setIndeterminate(true);
-        progressDialog.setMessage("Creating Account...");
+        progressDialog.setMessage("正在注册...");
         progressDialog.show();
 
         String username = _usernameText.getText().toString();
@@ -178,10 +208,12 @@ public class SignupActivity extends AppCompatActivity {
         String password = _passwordText.getText().toString();
         String password2 = _password2Text.getText().toString();
 
+        System.out.println("nickname昵称 = "+nickname);
+
         // TODO: Implement your own signup logic here.
         //signup logic below
         int k = email.indexOf("@");
-        String emailpre = email.substring(0, k - 1);
+        String emailpre = email.substring(0, k);
         String emailpos = email.substring(k + 1, email.length() );
         PrThread shim = new PrThread(username, password,emailpre,emailpos,nickname);
         Thread t = new Thread(shim);
@@ -205,7 +237,7 @@ public class SignupActivity extends AppCompatActivity {
                         // onSignupFailed();
 
                     }
-                }, 2100);
+                }, 1100);
     }
 
 
