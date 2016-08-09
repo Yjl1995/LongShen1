@@ -89,6 +89,7 @@ public class LoginActivity extends AppCompatActivity {
                                 NICK_NAME = nick_name;
                                 EMAIL = email;
                                 IMAGE_URL = image_url;
+
                             }
 
                         });

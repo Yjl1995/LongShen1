@@ -19,9 +19,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme1">
         <activity android:name=".ScanActivity" />
-        <activity android:name=".MerchantsActivity" />
-        <activity android:name=".RecommendedActivity" />
-        <activity android:name=".RecipeActivity" />
+        <activity android:name=".MerchantsActivity"
+            android:label="商家"/>
+        <activity android:name=".RecommendedActivity"
+            android:label="套餐"/>
+        <activity android:name=".RecipeActivity"
+            android:label="总菜谱"/>
         <activity android:name=".ShoopingCartActivity" />
         <activity
             android:name=".SignupActivity"
@@ -39,15 +42,22 @@
         <activity android:name=".ShopActivity" />
         <activity
             android:name=".NewMainActivity"
-            android:label="@string/title_activity_new_main"
+            android:label="随忆点"
             android:theme="@style/AppTheme1.NoActionBar" />
-        <activity android:name=".HistoryActivity" />
-        <activity android:name=".DetailsActivity" />
-        <activity android:name=".MyCollectionActivity" />
-        <activity android:name=".OrderActivity" />
-        <activity android:name=".AboutUsActivity" />
-        <activity android:name=".ModifyActivity" />
-        <activity android:name=".NewsActivity"></activity>
+        <activity android:name=".HistoryActivity"
+            android:label="足迹"/>
+        <activity android:name=".DetailsActivity"
+            android:label="订单详情"/>
+        <activity android:name=".MyCollectionActivity"
+            android:label="我的收藏" />
+        <activity android:name=".OrderActivity"
+            android:label="订单"/>
+        <activity android:name=".AboutUsActivity"
+            android:label="关于我们"/>
+        <activity android:name=".ModifyActivity"
+            android:label="修改头像"/>
+        <activity android:name=".NewsActivity"
+            android:label="美食报"></activity>
     </application>
 
 </manifest>

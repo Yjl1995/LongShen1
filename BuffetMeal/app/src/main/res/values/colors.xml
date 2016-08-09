@@ -4,7 +4,9 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="color1">#FFCCCC</color>
-    <color name="color2">#CCFFCC</color>
+    <color name="color2">#99CCFF00</color>
+    <color name="colory1">#99DD66</color>
+    <color name="deepgreen">#4eab07</color>
     <color name="color3">#10CCCC</color>
     <color name="color4">#FF00DD</color>
     <color name="color5">#FFDDDD</color>

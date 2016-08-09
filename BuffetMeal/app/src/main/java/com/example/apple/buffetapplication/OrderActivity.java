@@ -55,7 +55,8 @@ public class OrderActivity extends AppCompatActivity {
                         sum = sum+total[i];
                     }
                     TextView textView1 = (TextView) findViewById(R.id.heji);
-                    textView1.setText("￥"+Double.toString(sum));
+                    DecimalFormat df = new DecimalFormat("###.0");
+                    textView1.setText("￥"+df.format(sum));
                     listview = (ListView) findViewById(R.id.orderlist);
                     MyAdapter adapter = new MyAdapter();
                     listview.setAdapter(adapter);

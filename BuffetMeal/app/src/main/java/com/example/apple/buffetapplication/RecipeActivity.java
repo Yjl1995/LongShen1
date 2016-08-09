@@ -223,9 +223,9 @@ public class RecipeActivity extends AppCompatActivity{
         //取消tab下面的长横线
         tabStrip.setDrawFullUnderline(false);
         //设置tab的背景色
-        tabStrip.setBackgroundColor(this.getResources().getColor(R.color.colorPrimary));
+        tabStrip.setBackgroundColor(this.getResources().getColor(R.color.color2));
         //设置当前tab页签的下划线颜色
-        tabStrip.setTabIndicatorColor(this.getResources().getColor(R.color.colorAccent));
+        tabStrip.setTabIndicatorColor(this.getResources().getColor(R.color.colory1));
         tabStrip.setTextSpacing(200);
 
         /*View view1 = LayoutInflater.from(this).inflate(R.layout.tab1, null);
@@ -608,43 +608,43 @@ public class RecipeActivity extends AppCompatActivity{
         }
         return buffer.toString();
     }
-   /* private AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener(){
+    /* private AdapterView.OnItemClickListener listener = new AdapterView.OnItemClickListener(){
+         @Override
+         public void onItemClick(AdapterView<?> parent, View view, int position,//parent就是ListView，view表示Item视图，position表示数据索引
+                                 long id) {
+             ListView lv = (ListView)parent;
+             HashMap<String,Object> person = (HashMap<String,Object>)lv.getItemAtPosition(position);//SimpleAdapter返回Map
+             Toast.makeText(getApplicationContext(), person.toString(), Toast.LENGTH_SHORT).show();
+         }
+     };*/
+    private final class ItemClickEvent1 implements AdapterView.OnItemClickListener {
         @Override
-        public void onItemClick(AdapterView<?> parent, View view, int position,//parent就是ListView，view表示Item视图，position表示数据索引
-                                long id) {
-            ListView lv = (ListView)parent;
-            HashMap<String,Object> person = (HashMap<String,Object>)lv.getItemAtPosition(position);//SimpleAdapter返回Map
-            Toast.makeText(getApplicationContext(), person.toString(), Toast.LENGTH_SHORT).show();
+        //这里需要注意的是第三个参数arg2，这是代表单击第几个选项
+        public void onItemClick(AdapterView arg0, View arg1, int arg2,
+                                long arg3) {
+            //通过单击事件，获得单击选项的内容
+
+            Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_1[arg2].food_id)}, null, null, null);
+            boolean bool = cursor.moveToFirst();
+            System.out.println("bool = " + bool);
+            if (cursor.getCount() == 0) {
+
+                ContentValues cValue = new ContentValues();
+                cValue.put("foodid", Integer.toString(type_1[arg2].food_id));
+                cValue.put("name", type_1[arg2].food_name);
+                cValue.put("introduce", type_1[arg2].introduce);
+                cValue.put("price", type_1[arg2].price);
+                cValue.put("number", 1);
+                db.insert("meal", null, cValue);
+            } else {
+                ContentValues contentValues = new ContentValues();
+                contentValues.put("number", cursor.getInt(0) + 1);
+                int flat1 = db.update("meal", contentValues, "name = ?", new String[]{type_1[arg2].food_name});
+                System.out.println("flat1 = " + flat1);
+            }
+            cursor.close();
         }
-    };*/
-   private final class ItemClickEvent1 implements AdapterView.OnItemClickListener {
-       @Override
-       //这里需要注意的是第三个参数arg2，这是代表单击第几个选项
-       public void onItemClick(AdapterView arg0, View arg1, int arg2,
-                               long arg3) {
-           //通过单击事件，获得单击选项的内容
-
-           Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_1[arg2].food_id)}, null, null, null);
-           boolean bool = cursor.moveToFirst();
-           System.out.println("bool = " + bool);
-           if (cursor.getCount() == 0) {
-
-               ContentValues cValue = new ContentValues();
-               cValue.put("foodid", Integer.toString(type_1[arg2].food_id));
-               cValue.put("name", type_1[arg2].food_name);
-               cValue.put("introduce", type_1[arg2].introduce);
-               cValue.put("price", type_1[arg2].price);
-               cValue.put("number", 1);
-               db.insert("meal", null, cValue);
-           } else {
-               ContentValues contentValues = new ContentValues();
-               contentValues.put("number", cursor.getInt(0) + 1);
-               int flat1 = db.update("meal", contentValues, "name = ?", new String[]{type_1[arg2].food_name});
-               System.out.println("flat1 = " + flat1);
-           }
-           cursor.close();
-       }
-   }
+    }
     private final class ItemClickEvent2 implements AdapterView.OnItemClickListener {
         @Override
         //这里需要注意的是第三个参数arg2，这是代表单击第几个选项

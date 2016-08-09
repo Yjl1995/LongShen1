@@ -14,15 +14,19 @@
             android:layout_weight="1"
             android:text="套餐搭配"
             android:gravity="center"
-            android:textSize="20dip"/>
+            android:textSize="20dip"
+            android:background="#fad9ed1d" />
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="5dp" />
+            android:layout_height="7dp"
+            android:background="#fad5d7d7"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="6"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:paddingLeft="1dp"
+            android:paddingRight="1dp">
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -34,6 +38,7 @@
                     android:layout_weight="1"
                     android:id="@+id/text_11"
                     android:textColor="#333333"
+                    android:background="@android:color/holo_orange_light"
                     android:gravity="center"/>
 
                 <com.facebook.drawee.view.SimpleDraweeView
@@ -48,9 +53,15 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:id="@+id/text_12"
-                    android:textColor="#66ff00"
+                    android:textColor="@android:color/holo_orange_dark"
                     android:gravity="center"/>
             </LinearLayout>
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#fad5d7d7"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -61,6 +72,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:id="@+id/text_21"
+                    android:background="@android:color/holo_orange_light"
                     android:gravity="center"
                     android:textColor="#333333"/>
 
@@ -77,8 +89,14 @@
                     android:layout_weight="1"
                     android:id="@+id/text_22"
                     android:gravity="center"
-                    android:textColor="#66ff00"/>
+                    android:textColor="@android:color/holo_orange_dark"/>
             </LinearLayout>
+            <TextView
+                android:layout_width="2dp"
+                android:layout_height="match_parent"
+                android:background="#fad5d7d7"
+                android:paddingLeft="2dp"
+                android:paddingRight="2dp"/>
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
@@ -89,6 +107,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:id="@+id/text_31"
+                    android:background="@android:color/holo_orange_light"
                     android:gravity="center"
                     android:textColor="#000000"/>
 
@@ -105,9 +124,13 @@
                     android:layout_weight="1"
                     android:id="@+id/text_32"
                     android:gravity="center"
-                    android:textColor="#66ff00"/>
+                    android:textColor="@android:color/holo_orange_dark"/>
             </LinearLayout>
         </LinearLayout>
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="7dp"
+            android:background="#fad5d7d7"/>
         <ListView
             android:layout_width="match_parent"
             android:layout_height="0dp"

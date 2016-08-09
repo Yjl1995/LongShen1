@@ -31,6 +31,7 @@
                     android:id="@+id/item_title"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="1"
                     android:textColor="@color/cc_font_black"
                     android:maxLines="2"
@@ -61,9 +62,10 @@
                     android:id="@+id/item_surplus"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
                     android:gravity="center_vertical"
                     android:layout_weight="1"
-                    android:textColor="@color/cc_font_black"
+                    android:textColor="@android:color/holo_orange_light"
                     android:text="单价2150元" />
 
             </LinearLayout>
@@ -81,6 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center_vertical"
+                    android:layout_marginLeft="5dp"
                     android:layout_weight="3"
                     android:text="所点数量" />
 

@@ -4,16 +4,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
+        android:background="@color/iron"
         android:layout_weight="1">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:textColor="#000000"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
             android:gravity="center"
             android:text="菜品名称"
@@ -22,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="#000000"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
             android:gravity="center"
             android:text="单价"/>
@@ -30,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="#000000"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
             android:gravity="center"
             android:text="数量"/>
@@ -38,7 +40,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="#000000"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20dp"
             android:gravity="center"
             android:text="合计"/>
@@ -48,29 +50,39 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="6"
+        android:background="#fad5d7d7"
         android:id="@+id/orderlist"></ListView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
+        android:background="@color/iron"
         android:orientation="horizontal">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="合计:"
+            android:paddingLeft="70dp"
+            android:textSize="15sp"/>
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
             android:gravity="center"
-            android:textColor="#000000"
+            android:paddingLeft="10dp"
+            android:textSize="15sp"
+            android:textColor="#FF6600"
             android:id="@+id/heji"/>
         <Button
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="结算"
-            android:textColor="#000000"
-            android:textSize="22dp"
+            android:textColor="@color/white"
+            android:textSize="18sp"
             android:id="@+id/js"
             android:onClick="pay"
-            android:background="#99FF00"/>
+            android:background="@android:color/holo_orange_dark"/>
     </LinearLayout>
 
 </LinearLayout>

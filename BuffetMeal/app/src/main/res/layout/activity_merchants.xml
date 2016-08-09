@@ -4,10 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:background="#fad5d7d7"
     tools:context="com.example.apple.zhuapplication.Main2Activity">
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:padding="5dp"
+        android:background="@drawable/merchantbackground"
         android:orientation="horizontal"
         android:layout_weight="2">
 
@@ -17,9 +20,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"/>
         <LinearLayout
-            android:background="@drawable/merchantbackground"
             android:layout_width="0dp"
             android:layout_height="match_parent"
+            android:paddingLeft="3dp"
             android:orientation="vertical"
             android:layout_weight="2">
             <TextView
@@ -43,6 +46,7 @@
                 <TextView
                     android:id="@+id/shopAd"
                     android:layout_width="0dp"
+                    android:paddingLeft="3dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:text="地址："/>
@@ -62,6 +66,7 @@
                 <TextView
                     android:id="@+id/shopTel"
                     android:layout_width="0dp"
+                    android:paddingLeft="3dp"
                     android:layout_height="match_parent"
                     android:layout_weight="5"
                     android:text="电话"/>
@@ -70,19 +75,19 @@
             <TextView
                 android:id="@+id/shopAve"
                 android:layout_width="match_parent"
+                android:paddingLeft="13dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
                 android:text="人均消费"/>
 
         </LinearLayout>
-
-
-
     </LinearLayout>
     <LinearLayout
+        android:background="#fad5d7d7"
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="0dp"
+        android:paddingTop="5dp"
         android:layout_weight="3">
         <TextView
             android:layout_width="match_parent"
@@ -90,51 +95,250 @@
             android:layout_weight="1"
             android:text="详细介绍"
             android:textSize="20dp"
-            android:background="@drawable/introductionsplitbar"
+            android:background="#fad9ed1d"
             android:gravity="center_vertical|center_horizontal"/>
         <TextView
-            android:id="@+id/shopInfo"
-            android:text="店铺介绍："
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:background="#fad5d7d7"/>
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight="4"/>
-
+            android:layout_weight="4"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.15"/>
+            <TextView
+                android:id="@+id/shopInfo"
+                android:text="店铺介绍："
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="12"/>
+            <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0.15"/>
+        </LinearLayout>
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
         android:orientation="vertical"
         android:layout_height="0dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginBottom="3dp"
+        android:background="#fad5d7d7"
         android:layout_weight="3">
-        <TextView
-            android:id="@+id/shopStar"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:text="总评分："
-            android:textSize="20dp"
-            android:background="@drawable/introductionsplitbar"
-            android:gravity="center_vertical"/>
-        <TextView
-            android:id="@+id/shopSever"
+            android:background="#fad9ed1d"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="总评分："
+                android:textSize="20dp"
+                android:gravity="center_vertical"/>
+            <RatingBar
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="15dp"
+                android:id="@+id/shopStar"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:numStars="5"
+                android:stepSize="0.5"
+                android:max="5"
+                android:isIndicator="true"
+                style="?android:attr/ratingBarStyleSmall"
+                />
+        </LinearLayout>
+        <LinearLayout
             android:layout_width="match_parent"
+            android:orientation="horizontal"
             android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/shopSpeed"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/shopEn"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
-        <TextView
-            android:id="@+id/shopGood"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"/>
+            android:paddingLeft="5dp"
 
+            android:paddingRight="5dp"
+
+            android:layout_weight="0.8"
+            android:background="#fad5d7d7">
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/service"
+                    android:scaleType="fitXY"
+                    />
+
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:text="服务质量："
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center_vertical"
+                    />
+                <RatingBar
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="9dp"
+                    android:id="@+id/shopSever"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:max="5"
+                    android:isIndicator="true"
+                    style="?android:attr/ratingBarStyleSmall"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_weight="0.8"
+            android:background="#fad5d7d7">
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/speed"
+                    android:scaleType="fitXY"
+                    />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:text="上菜速度："
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center_vertical"
+                    />
+                <RatingBar
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="9dp"
+                    android:id="@+id/shopSpeed"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:max="5"
+                    android:isIndicator="true"
+                    style="?android:attr/ratingBarStyleSmall"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_weight="0.8"
+            android:background="#fad5d7d7">
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/environment"
+                    android:scaleType="fitXY"
+                    />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:text="餐厅环境："
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center_vertical"
+                    />
+                <RatingBar
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="9dp"
+                    android:id="@+id/shopEn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:max="5"
+                    android:isIndicator="true"
+                    style="?android:attr/ratingBarStyleSmall"
+                    />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="horizontal"
+            android:layout_height="0dp"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:layout_weight="0.8"
+            android:background="#fad5d7d7">
+            <LinearLayout
+                android:background="@color/white"
+                android:layout_width="0dp"
+                android:layout_marginTop="4dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.8"
+                android:orientation="horizontal">
+                <ImageView
+                    android:layout_width="19dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginBottom="7dp"
+                    android:layout_marginLeft="3dp"
+                    android:background="@drawable/feedback"
+                    android:scaleType="fitXY"
+                    />
+                <TextView
+                    android:layout_marginLeft="5dp"
+                    android:text="菜品反馈："
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center_horizontal|center_vertical"
+                    />
+                <RatingBar
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="9dp"
+                    android:id="@+id/shopGood"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:numStars="5"
+                    android:stepSize="0.5"
+                    android:max="5"
+                    android:isIndicator="true"
+                    style="?android:attr/ratingBarStyleSmall"
+                    />
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
 
 </LinearLayout>

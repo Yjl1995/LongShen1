@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:orientation="vertical"
     android:layout_height="match_parent">
 
     <TextView
         android:id="@+id/main_text"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_weight="1"
+        android:layout_height="0dp"
         android:gravity="center"
         android:text="购物车"
         android:textSize="24dp"
@@ -14,11 +16,14 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@+id/main_text"
-        android:layout_above="@+id/pb"
+        android:layout_height="0dp"
+        android:layout_weight="7"
+        android:orientation="vertical"
         >
-
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="#66d5d7d7"/>
         <ListView
             android:id="@+id/shoppinglist"
             android:layout_width="match_parent"
@@ -26,41 +31,50 @@
             android:cacheColorHint="#00000000"
             android:listSelector="#00000000"></ListView>
 
-
-
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:id="@+id/pb"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
+        android:background="#66d5d7d7"
         android:layout_alignParentBottom="true"
         >
-
         <TextView
             android:id="@+id/shoppingcart_account_describe_tv"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="20dp"
             android:layout_centerVertical="true"
-            android:text="共0个菜，总计：0元"
+            android:gravity="center"
+            android:textColor="@color/primary"
+            android:textSize="20dp"
+            android:text="共0个菜，总计：￥0"
             />
 
         <Button
             android:id="@+id/shoppingcart__account_bt"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
             android:layout_gravity="center_vertical"
             android:layout_alignParentRight="true"
             android:gravity="center"
             android:text="提交订单"
+            android:background="@android:color/holo_orange_light"
             android:onClick="jiesuan"
             />
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 
 
-</RelativeLayout>
+</LinearLayout>

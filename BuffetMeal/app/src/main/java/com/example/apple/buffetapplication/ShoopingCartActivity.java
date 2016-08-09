@@ -105,7 +105,6 @@ public class ShoopingCartActivity extends Activity implements ShoppingCartAdapte
         double tot = getTotalPrice(lists);
         shoppingNumber.setText("共" + lists.size() + "种菜，总计：" + df.format(tot) + "元");
 
-
     }
 
     /**
@@ -155,7 +154,9 @@ public class ShoopingCartActivity extends Activity implements ShoppingCartAdapte
                 editor.putString(lists.get(position).getId() + "", "").commit();//清空保存的数据
                 lists.remove(position);
                 adapter.notifyDataSetChanged();//重新刷新
-                shoppingNumber.setText("共" + lists.size() + "个菜，总计：" + getTotalPrice(lists) + "元");
+                DecimalFormat df = new DecimalFormat("###.0");
+                double tot = getTotalPrice(lists);
+                shoppingNumber.setText("共" + lists.size() + "个菜，总计：" + df.format(tot) + "元");
 
             }
         });

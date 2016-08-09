@@ -23,7 +23,7 @@
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
             android:paddingBottom="5dp"
-            android:paddingTop="5dp"
+            android:paddingTop="10dp"
             android:textColor="#000000"
             android:textSize="20px" />
         <TextView android:id="@+id/introduce"
@@ -51,7 +51,7 @@
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:textSize="19px"
-                android:textColor="#66ff00"
+                android:textColor="@android:color/holo_orange_dark"
                 android:gravity="center"/>
             <TextView
                 android:layout_width="0dp"
@@ -61,7 +61,7 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:textColor="#cccccc"
                 android:gravity="center"
                 android:textSize="12px"/>
@@ -73,10 +73,10 @@
                 android:paddingLeft="5dp"
                 android:paddingRight="5dp"
                 android:paddingBottom="5dp"
-                android:paddingTop="5dp"
+                android:paddingTop="10dp"
                 android:textSize="12px"
                 android:textColor="#333333"
-                android:gravity="right"/>
+                android:gravity="right" />
         </LinearLayout>
     </LinearLayout>
 </LinearLayout>

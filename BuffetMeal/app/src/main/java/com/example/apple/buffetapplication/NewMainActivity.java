@@ -173,7 +173,7 @@ public class NewMainActivity extends AppCompatActivity
                 connection.setRequestMethod("GET");
                 connection.setDoInput(true);
                 connection.setDoOutput(true);
-                connection.setReadTimeout(1000);
+                connection.setReadTimeout(3000);
                 connection.connect();
                 InputStream inStream = connection.getInputStream();
                 String flag = new String(inputtostring(inStream));
@@ -501,11 +501,11 @@ public class NewMainActivity extends AppCompatActivity
                         // On complete call either onLoginSuccess or onLoginFailed
                         if (ASK == 1) {
                             Toast.makeText(getBaseContext(), MESSAGE, Toast.LENGTH_LONG).show();
-                            onLogoutSuccess();
+
                         } else {
                             onLogoutFailed();
                         }
-
+                        onLogoutSuccess();
                     }
                 }, 1100);
     }

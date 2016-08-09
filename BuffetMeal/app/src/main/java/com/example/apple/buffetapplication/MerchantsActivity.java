@@ -6,6 +6,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -95,24 +96,40 @@ public class MerchantsActivity extends AppCompatActivity {
                         TextView shopaddress = (TextView) findViewById(R.id.shopAd);
                         TextView shoptel = (TextView) findViewById(R.id.shopTel);
                         TextView shopaverage = (TextView) findViewById(R.id.shopAve);
-                        TextView shopstar = (TextView) findViewById(R.id.shopStar);
+//                        TextView shopstar = (TextView) findViewById(R.id.shopStar);
+                        RatingBar shopStar = (RatingBar) findViewById(R.id.shopStar);
+                        shopStar.setRating((float) star);
+
                         TextView shopinfo = (TextView) findViewById(R.id.shopInfo);
-                        TextView shopenvironment = (TextView) findViewById(R.id.shopEn);
-                        TextView shopspeed = (TextView) findViewById(R.id.shopSpeed);
-                        TextView shopservice = (TextView) findViewById(R.id.shopSever);
-                        TextView shopgood = (TextView) findViewById(R.id.shopGood);
+//                        TextView shopenvironment = (TextView) findViewById(R.id.shopEn);
+//                        TextView shopspeed = (TextView) findViewById(R.id.shopSpeed);
+//                        TextView shopservice = (TextView) findViewById(R.id.shopSever);
+
+                        RatingBar shopSever = (RatingBar) findViewById(R.id.shopSever);
+                        shopSever.setRating((float) service);
+
+                        RatingBar shopSpeed = (RatingBar) findViewById(R.id.shopSpeed);
+                        shopSpeed.setRating((float) speed);
+
+                        RatingBar shopEn = (RatingBar) findViewById(R.id.shopEn);
+                        shopEn.setRating((float) environment);
+
+                        RatingBar shopGood = (RatingBar) findViewById(R.id.shopGood);
+                        shopGood.setRating((float) cheap_fine);
+
+                        //TextView shopgood = (TextView) findViewById(R.id.shopGood);
                         Uri uri = Uri.parse(imageUrl);
                         imageView.setImageURI(uri);
                         shopname.setText(shopName);
                         shopaddress.setText(address);
                         shoptel.setText(tel);
                         shopaverage.setText("平均消费："+Double.toString(average)+"元");
-                        shopstar.setText("总评分："+Integer.toString(star));
+//                        shopstar.setText("总评分："+Integer.toString(star));
                         shopinfo.setText("    "+shopInfo);
-                        shopenvironment.setText("餐厅环境："+Integer.toString(environment));
-                        shopspeed.setText("上菜速度："+Integer.toString(speed));
-                        shopservice.setText("服务质量："+Integer.toString(service));
-                        shopgood.setText("菜品反馈："+Integer.toString(cheap_fine));
+//                        shopenvironment.setText("餐厅环境："+Integer.toString(environment));
+//                        shopspeed.setText("上菜速度："+Integer.toString(speed));
+//                        shopservice.setText("服务质量："+Integer.toString(service));
+//                        shopgood.setText("菜品反馈："+Integer.toString(cheap_fine));
                     }
                     else{
                         Toast.makeText(getBaseContext(), MESSAGE, Toast.LENGTH_LONG).show();
