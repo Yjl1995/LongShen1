@@ -249,6 +249,7 @@ public class ShoopingCartActivity extends Activity implements ShoppingCartAdapte
         }
         return buffer.toString();
     }
+
     public void jiesuan(View v){
 
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this)
@@ -263,10 +264,10 @@ public class ShoopingCartActivity extends Activity implements ShoppingCartAdapte
         return builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
+                Toast.makeText(ShoopingCartActivity.this,"正在为您烹饪，请稍等！",Toast.LENGTH_SHORT).show();
                 PrThread shim = new PrThread();
                 Thread tt = new Thread(shim);
                 tt.start();
-                Toast.makeText(ShoopingCartActivity.this,"正在为您烹饪，请稍等！",Toast.LENGTH_SHORT);
                 ShoopingCartActivity.this.finish();
             }
         });

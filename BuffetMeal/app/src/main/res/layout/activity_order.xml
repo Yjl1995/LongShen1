@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
 
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:orientation="horizontal"
-        android:background="@color/iron"
+
         android:layout_weight="1">
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="2"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/deepgreen"
             android:textSize="20dp"
             android:gravity="center"
             android:text="菜品名称"
@@ -24,7 +24,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/deepgreen"
             android:textSize="20dp"
             android:gravity="center"
             android:text="单价"/>
@@ -32,7 +32,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/deepgreen"
             android:textSize="20dp"
             android:gravity="center"
             android:text="数量"/>
@@ -40,23 +40,38 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:textColor="@color/colorPrimaryDark"
+            android:textColor="@color/deepgreen"
             android:textSize="20dp"
             android:gravity="center"
             android:text="合计"/>
     </LinearLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="6"
-        android:background="#fad5d7d7"
-        android:id="@+id/orderlist"></ListView>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
+        android:layout_weight="6"
+        android:orientation="vertical"
+        >
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="4dp"
+            android:background="#66d5d7d7"/>
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+
+            android:background="@color/white"
+            android:id="@+id/orderlist">
+        </ListView>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
         android:layout_weight="1"
-        android:background="@color/iron"
+        android:background="@color/grey"
         android:orientation="horizontal">
         <TextView
             android:layout_width="wrap_content"

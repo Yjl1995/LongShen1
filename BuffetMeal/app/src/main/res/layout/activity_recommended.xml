@@ -31,7 +31,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:onClick="onclick1"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/mylist_view">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -46,7 +50,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="5"
-                    android:onClick="onclick1"
+
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -66,7 +70,11 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:onClick="onclick2"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/mylist_view">
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -81,7 +89,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="5"
-                    android:onClick="onclick2"
+
                     />
                 <TextView
                     android:layout_width="match_parent"
@@ -101,7 +109,12 @@
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:clickable="true"
+                android:focusable="true"
+                android:onClick="onclick3"
+                android:background="@drawable/mylist_view"
+                >
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
@@ -116,7 +129,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="0dp"
                     android:layout_weight="5"
-                    android:onClick="onclick3"
+
                     />
                 <TextView
                     android:layout_width="match_parent"

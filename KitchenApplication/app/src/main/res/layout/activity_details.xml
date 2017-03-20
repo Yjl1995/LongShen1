@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              xmlns:tools="http://schemas.android.com/tools"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent"
+              android:orientation="vertical"
+              tools:context="com.example.apple.buffetapplication.DetailsActivity">
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:text="订单详情"
+        android:textColor="@color/deepgreen"
+        android:textSize="15dp"
+        android:background="@drawable/detailbackground"
+        android:gravity="center_horizontal|center_vertical"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"
+        android:background="@color/iron"/>
+    <ListView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="8"
+        android:id="@+id/list_item6">
+
+    </ListView>
+    <LinearLayout
+        android:id="@+id/pb"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="3dp"
+        android:orientation="horizontal"
+        android:layout_marginRight="3dp"
+        android:layout_marginLeft="3dp"
+        android:background="#66d5d7d7"
+        android:layout_alignParentBottom="true"
+        >
+        <TextView
+            android:id="@+id/shoppingcart_account_describe_tv"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="5"
+            android:layout_gravity="center_vertical"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:textSize="20dp"
+            />
+
+        <Button
+            android:id="@+id/shoppingcart__account_bt"
+            android:layout_width="0dp"
+            android:layout_weight="2"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_vertical"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:text="交易完成"
+            android:background="@android:color/holo_orange_light"
+            android:onClick="OK"
+            />
+
+
+    </LinearLayout>
+</LinearLayout>

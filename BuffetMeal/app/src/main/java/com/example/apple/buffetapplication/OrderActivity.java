@@ -2,6 +2,7 @@ package com.example.apple.buffetapplication;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -33,7 +35,11 @@ public class OrderActivity extends AppCompatActivity {
     private ListView listview;
     static String Alldata = "";
     static int K = 0;
+    static String Shop_id = "";
+    static String Desk_id = "";
+    static String CODE1 = "";
     static int KK = 0;
+    static String Allpic = "";
     static int[] orderid = new int[100];
     static double[] total = new double[100];
     static int[] foodnum = new int[150];
@@ -41,6 +47,57 @@ public class OrderActivity extends AppCompatActivity {
     static double[] price = new double[150];
 
     public static final int UPDATE = 1;
+
+    private Handler KHandler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case 1:
+                    Allpic = msg.obj.toString();
+                    ExcJsonAllpic();
+                    if(CODE1.equals("200")){
+                        Toast.makeText(OrderActivity.this,"正在为您呼叫服务员，请稍等！",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(OrderActivity.this,"呼叫服务员失败，请重试！",Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
+    class PkThread implements Runnable {
+        public PkThread() {
+        }
+        public void run() {
+            try {
+                URL url1 = new URL("http://115.159.212.180/API/callWaiter/callWaiter.php?shopId="+Shop_id+"&deskId="+Desk_id);
+                HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setReadTimeout(5000);
+                connection.connect();
+                InputStream inStream = connection.getInputStream();
+                String flag = new String(inputtostring(inStream));
+                Message bmessage = new Message();
+                bmessage.what = 1;
+                bmessage.obj = flag;
+                KHandler.sendMessage(bmessage);
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
     private Handler mHandler = new Handler() {
 
         @Override
@@ -68,21 +125,6 @@ public class OrderActivity extends AppCompatActivity {
 
     };
 
-    private Handler YHandler = new Handler() {
-
-        @Override
-        public void handleMessage(Message msg) {
-
-            switch (msg.what) {
-                case UPDATE:
-                    OrderActivity.this.finish();
-                    break;
-                default:
-                    break;
-            }
-        }
-
-    };
 
     class PrThread implements Runnable {
         public PrThread() {
@@ -118,12 +160,25 @@ public class OrderActivity extends AppCompatActivity {
         }
     }
 
+    private void ExcJsonAllpic(){
+        try {
+            JSONObject jsonObject = new JSONObject(Allpic);
+            CODE1= jsonObject.getString("code");
+            JSONArray jsondata = jsonObject.getJSONArray("data");
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_order);
         K = 0;
         KK = 0;
+        Intent intent = getIntent();
+        Shop_id = intent.getStringExtra("shopid");
+        Desk_id = intent.getStringExtra("deskid");
         PrThread shim = new PrThread();
         Thread tt = new Thread(shim);
         tt.start();
@@ -223,83 +278,41 @@ public class OrderActivity extends AppCompatActivity {
         return buffer.toString();
     }
 
-    class PPThread implements Runnable {
-        public PPThread() {
-        }
-        public void run() {
-            try {
-                String json = changeJson();
-                String url = "http://115.159.212.180/API/orders/payOrders.php";
-                URL url1 = new URL(url);
-                HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
-                connection.setRequestMethod("POST");
-                connection.setDoInput(true);
-                connection.setDoOutput(true);
-                connection.setUseCaches(false);
-                connection.setReadTimeout(5000);
-                connection.connect();
-                OutputStream outputStream = connection.getOutputStream();
-                byte[] data = json.getBytes();
-                outputStream.write(data);
-                InputStream inStream = connection.getInputStream();
-                String flag = new String(inputtostring(inStream));
-                JSONObject jsonObject11 = new JSONObject(flag);
-                String code = jsonObject11.getString("code");
-                String message = jsonObject11.getString("message");
-                if(code.equals("200")){
-                    Message message1 = new Message();
-                    message1.what = UPDATE;
-                    YHandler.sendMessage(message1);
-                }
-                inStream.close();
-                outputStream.close();
-            } catch (MalformedURLException e) {
-                e.printStackTrace();
-            } catch (ProtocolException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-    public  String changeJson(){
-        try {
 
-            JSONArray array = new JSONArray();
-            JSONObject object = new JSONObject();
-            String username = Util.getValue(this, "NAME");
-            object.put("username", username);
-            for(int i = 0;i < KK;i++){
-                array.put(orderid[i]);
-            }
-            object.put("order_id",array);
-            return object.toString();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
     public void pay(View view){
         AlertDialog.Builder builder = new AlertDialog.Builder(this)
-                .setTitle("提示")
-                .setMessage("确认结算");
-        setPositiveButton(builder);
+                .setTitle("请选择结算方式")
+                .setItems(new String[]{"现金", "支付宝"}, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        PPThread shim1 = new PPThread();
+//                        Thread tt1 = new Thread(shim1);
+//                        tt1.start();
+                        switch (which) {
+                            case 0:
+                                Toast.makeText(OrderActivity.this, "正在为您呼叫服务员", Toast.LENGTH_SHORT).show();
+                                PkThread shik = new PkThread();
+                                Thread kk = new Thread(shik);
+                                kk.start();
+                                OrderActivity.this.finish();
+                                break;
+                            case 1:
+                                startActivity(getPackageManager().getLaunchIntentForPackage("com.eg.android.AlipayGphone"));
+                                OrderActivity.this.finish();
+                                break;
+                            default:
+                                break;
+
+                        }
+
+                    }
+                });
+
         setNegativeButton(builder);
         builder.create();
         builder.show();
     }
-    private AlertDialog.Builder setPositiveButton(AlertDialog.Builder builder){
-        return builder.setPositiveButton("确定", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                PPThread shim1 = new PPThread();
-                Thread tt1 = new Thread(shim1);
-                tt1.start();
-            }
-        });
-    }
+
     private AlertDialog.Builder setNegativeButton(AlertDialog.Builder builder){
         return builder.setNegativeButton("取消", new DialogInterface.OnClickListener() {
             @Override

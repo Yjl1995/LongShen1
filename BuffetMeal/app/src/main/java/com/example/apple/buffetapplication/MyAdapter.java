@@ -56,7 +56,7 @@ public class MyAdapter extends PagerAdapter {
             @Override
             public void onClick(View v) {
                 // TODO Auto-generated method stub
-                Toast.makeText(context, "点击了图片", Toast.LENGTH_SHORT).show();
+                Toast.makeText(context, "广告位待出租！", Toast.LENGTH_SHORT).show();
             }
         });
         container.addView(data.get(position%data.size()));

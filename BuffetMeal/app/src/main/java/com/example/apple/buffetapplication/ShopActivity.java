@@ -275,6 +275,29 @@ public class ShopActivity extends AppCompatActivity {
         }
 
     };
+    //服务员Handle
+    private Handler KHandler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+
+            switch (msg.what) {
+                case 1:
+                    Allpic = msg.obj.toString();
+                    ExcJsonAllpic();
+                    if(CODE1.equals("200")){
+                        Toast.makeText(ShopActivity.this,"正在为您呼叫服务员，请稍等！",Toast.LENGTH_LONG).show();
+                    }
+                    else{
+                        Toast.makeText(ShopActivity.this,"呼叫服务员失败，请重试！",Toast.LENGTH_LONG).show();
+                    }
+                    break;
+                default:
+                    break;
+            }
+        }
+
+    };
 
     //收藏Handler
     // TODO：未修改完
@@ -486,11 +509,40 @@ public class ShopActivity extends AppCompatActivity {
                 connection.connect();
                 InputStream inStream = connection.getInputStream();
                 String flag = new String(inputtostring(inStream));
-                //System.out.println("flag = " + flag);
                 Message bmessage = new Message();
                 bmessage.what = 1;
                 bmessage.obj = flag;
                 BHandler.sendMessage(bmessage);
+
+            } catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (ProtocolException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    //服务员线程
+    class PkThread implements Runnable {
+        public PkThread() {
+        }
+        public void run() {
+            try {
+                URL url1 = new URL("http://115.159.212.180/API/callWaiter/callWaiter.php?shopId="+Shop_id+"&deskId="+Desk_id);
+                HttpURLConnection connection = (HttpURLConnection) url1.openConnection();
+                connection.setRequestMethod("GET");
+                connection.setDoInput(true);
+                connection.setDoOutput(true);
+                connection.setReadTimeout(5000);
+                connection.connect();
+                InputStream inStream = connection.getInputStream();
+                String flag = new String(inputtostring(inStream));
+                Message bmessage = new Message();
+                bmessage.what = 1;
+                bmessage.obj = flag;
+                KHandler.sendMessage(bmessage);
 
             } catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -759,5 +811,11 @@ public class ShopActivity extends AppCompatActivity {
             return true;
         }
         return super.onKeyDown(keyCode, event);
+    }
+    public  void CallWaiter (View view)
+    {
+        PkThread shik = new PkThread();
+        Thread kk = new Thread(shik);
+        kk.start();
     }
 }

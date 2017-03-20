@@ -623,7 +623,7 @@ public class RecipeActivity extends AppCompatActivity{
         public void onItemClick(AdapterView arg0, View arg1, int arg2,
                                 long arg3) {
             //通过单击事件，获得单击选项的内容
-
+            Toast.makeText(getBaseContext(), "菜品添加成功", Toast.LENGTH_SHORT).show();
             Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_1[arg2].food_id)}, null, null, null);
             boolean bool = cursor.moveToFirst();
             System.out.println("bool = " + bool);
@@ -651,6 +651,7 @@ public class RecipeActivity extends AppCompatActivity{
         public void onItemClick(AdapterView arg0, View arg1, int arg2,
                                 long arg3) {
             //通过单击事件，获得单击选项的内容
+            Toast.makeText(getBaseContext(), "菜品添加成功", Toast.LENGTH_SHORT).show();
             System.out.println("arg = "+arg2);
             Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_2[arg2].food_id)}, null, null, null);
             boolean bool = cursor.moveToFirst();
@@ -679,7 +680,7 @@ public class RecipeActivity extends AppCompatActivity{
         public void onItemClick(AdapterView arg0, View arg1, int arg2,
                                 long arg3) {
             //通过单击事件，获得单击选项的内容
-
+            Toast.makeText(getBaseContext(), "菜品添加成功", Toast.LENGTH_SHORT).show();
             Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_3[arg2].food_id)}, null, null, null);
             boolean bool = cursor.moveToFirst();
             System.out.println("bool = " + bool);
@@ -707,7 +708,7 @@ public class RecipeActivity extends AppCompatActivity{
         public void onItemClick(AdapterView arg0, View arg1, int arg2,
                                 long arg3) {
             //通过单击事件，获得单击选项的内容
-
+            Toast.makeText(getBaseContext(), "菜品添加成功", Toast.LENGTH_SHORT).show();
             Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(type_4[arg2].food_id)}, null, null, null);
             boolean bool = cursor.moveToFirst();
             System.out.println("bool = " + bool);

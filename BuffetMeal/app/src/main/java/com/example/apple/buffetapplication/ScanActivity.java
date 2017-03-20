@@ -40,6 +40,7 @@ public class ScanActivity extends Activity implements QRCodeView.Delegate {
     static String MESSAGE = "您的网络不稳定，请检查网络连接！";
     static String CODE = "";
     static String Shop_id = "";
+    static String Desk_id = "";
     private Handler mHandler = new Handler(){
 
         @Override
@@ -52,6 +53,7 @@ public class ScanActivity extends Activity implements QRCodeView.Delegate {
                     if(CODE.equals("200")){
                         Intent intent =new Intent(ScanActivity.this,ShopActivity.class);
                         intent.putExtra("shopid",Shop_id);
+                        intent.putExtra("deskid",Desk_id);
                         startActivity(intent);
                     }
                     else{
@@ -133,7 +135,9 @@ public class ScanActivity extends Activity implements QRCodeView.Delegate {
     @Override
     public void onScanQRCodeSuccess(String result) {
 
-        Shop_id = result;
+        String[] sourceStrArray = result.split("-");
+        Shop_id = sourceStrArray[0];
+        Desk_id = sourceStrArray[1];
         PrThread shim = new PrThread();
         Thread tt = new Thread(shim);
         tt.start();

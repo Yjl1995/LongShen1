@@ -18,6 +18,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.facebook.drawee.backends.pipeline.Fresco;
 import com.facebook.drawee.view.SimpleDraweeView;
@@ -246,6 +247,7 @@ public class RecommendedActivity extends AppCompatActivity {
         public void onItemClick(AdapterView arg0, View arg1, int arg2,
                                 long arg3) {
             //通过单击事件，获得单击选项的内容
+            Toast.makeText(getBaseContext(), "菜品添加成功", Toast.LENGTH_SHORT).show();
             Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(rmeals[arg2+3].food_id)}, null, null, null);
             boolean bool = cursor.moveToFirst();
             System.out.println("bool = " + bool);
@@ -271,6 +273,7 @@ public class RecommendedActivity extends AppCompatActivity {
         Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(rmeals[0].food_id)}, null, null, null);
         boolean bool = cursor.moveToFirst();
         System.out.println("bool = " + bool);
+        Toast.makeText(getBaseContext(), "菜品添加成功", Toast.LENGTH_SHORT).show();
         if (cursor.getCount() == 0) {
 
             ContentValues cValue = new ContentValues();
@@ -292,6 +295,7 @@ public class RecommendedActivity extends AppCompatActivity {
         Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(rmeals[1].food_id)}, null, null, null);
         boolean bool = cursor.moveToFirst();
         System.out.println("bool = " + bool);
+        Toast.makeText(getBaseContext(), "菜品添加成功", Toast.LENGTH_SHORT).show();
         if (cursor.getCount() == 0) {
 
             ContentValues cValue = new ContentValues();
@@ -313,6 +317,7 @@ public class RecommendedActivity extends AppCompatActivity {
         Cursor cursor = db.query("meal", new String[]{"number"}, "foodid=?", new String[]{Integer.toString(rmeals[2].food_id)}, null, null, null);
         boolean bool = cursor.moveToFirst();
         System.out.println("bool = " + bool);
+        Toast.makeText(getBaseContext(), "菜品添加成功", Toast.LENGTH_SHORT).show();
         if (cursor.getCount() == 0) {
 
             ContentValues cValue = new ContentValues();
